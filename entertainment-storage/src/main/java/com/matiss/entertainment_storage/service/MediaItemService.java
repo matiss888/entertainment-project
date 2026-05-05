@@ -2,8 +2,6 @@ package com.matiss.entertainment_storage.service;
 
 import java.util.List;
 
-import javax.print.attribute.standard.Media;
-
 import org.springframework.stereotype.Service;
 
 import com.matiss.entertainment_storage.exception.MediaItemNotFoundException;
@@ -33,9 +31,9 @@ public class MediaItemService {
     }
 
     public MediaItem updateMediaItem(Long id, MediaItem mediaItem) {
-        MediaItem foundMediaItem = mediaItemRepository.findById(id)
+        MediaItem updateOneMediaItem = mediaItemRepository.findById(id)
                 .orElseThrow(() -> new MediaItemNotFoundException("No media item was found with this id."));
-        MediaItem updatedMediaItem = foundMediaItem;
+        MediaItem updatedMediaItem = updateOneMediaItem;
         updatedMediaItem.setGenre(mediaItem.getGenre());
         updatedMediaItem.setRating(mediaItem.getRating());
         updatedMediaItem.setStatus(mediaItem.getStatus());
@@ -43,7 +41,12 @@ public class MediaItemService {
         updatedMediaItem.setType(mediaItem.getType());
         mediaItemRepository.save(updatedMediaItem);
         return updatedMediaItem;
+    }
 
+    public MediaItem getMediaItemById(Long id) {
+        MediaItem getOneMediaItem = mediaItemRepository.findById(id)
+                .orElseThrow(() -> new MediaItemNotFoundException("No media item was found with this id."));
+        return getOneMediaItem;
     }
 
 }

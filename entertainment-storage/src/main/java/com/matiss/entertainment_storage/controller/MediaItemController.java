@@ -53,4 +53,10 @@ public class MediaItemController {
         return new ResponseEntity<MediaItem>(updatedMediaItem, HttpStatus.OK);
     }
 
+    @GetMapping("/media_items/get/{id}")
+    public ResponseEntity<MediaItem> getOneMediaItem(@PathVariable Long id) {
+        MediaItem oneMediaItem = mediaItemService.getMediaItemById(id);
+        return new ResponseEntity<MediaItem>(oneMediaItem, HttpStatus.OK);
+    }
+
 }
