@@ -6,6 +6,7 @@ import javax.print.attribute.standard.Media;
 
 import org.springframework.stereotype.Service;
 
+import com.matiss.entertainment_storage.exception.MediaItemNotFoundException;
 import com.matiss.entertainment_storage.model.MediaItem;
 import com.matiss.entertainment_storage.repository.MediaItemRepository;
 
@@ -33,7 +34,7 @@ public class MediaItemService {
 
     public MediaItem updateMediaItem(Long id, MediaItem mediaItem) {
         MediaItem foundMediaItem = mediaItemRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("No media item was found with this id."));
+                .orElseThrow(() -> new MediaItemNotFoundException("No media item was found with this id."));
         MediaItem updatedMediaItem = foundMediaItem;
         updatedMediaItem.setGenre(mediaItem.getGenre());
         updatedMediaItem.setRating(mediaItem.getRating());
