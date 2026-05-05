@@ -48,7 +48,7 @@ public class MediaItemController {
     }
 
     @PutMapping("/media_items/update/{id}")
-    public ResponseEntity<MediaItem> updateMediaItem(@PathVariable Long id, @RequestBody MediaItem mediaItem) {
+    public ResponseEntity<MediaItem> updateMediaItem(@PathVariable Long id, @RequestBody @Valid MediaItem mediaItem) {
         MediaItem updatedMediaItem = mediaItemService.updateMediaItem(id, mediaItem);
         return new ResponseEntity<MediaItem>(updatedMediaItem, HttpStatus.OK);
     }
