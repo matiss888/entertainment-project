@@ -1,5 +1,6 @@
 package com.matiss.entertainment_storage.service;
 
+import com.matiss.entertainment_storage.dto.LoginRequest;
 import com.matiss.entertainment_storage.dto.RegUserResponse;
 import com.matiss.entertainment_storage.dto.RegisterRequest;
 import com.matiss.entertainment_storage.model.User;
@@ -28,6 +29,18 @@ public class AuthService {
         user.setPassword(passwordEncoder.encode(request.getPassword()));
 
         userRepository.save(user);
+
+        String token = jwtUtil.generateToken(user.getEmail());
+        return new RegUserResponse(token, user.getUsername());
+    }
+
+    public RegUserResponse login(LoginRequest request) {
+        User user = userRepository.findByEmail(request.getEmail())
+                .orElseThrow(() -> new IllegalArgumentException("Invalid email or password."));
+
+        if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
+            throw new IllegalArgumentException("Invalid email or password.");
+        }
 
         String token = jwtUtil.generateToken(user.getEmail());
         return new RegUserResponse(token, user.getUsername());

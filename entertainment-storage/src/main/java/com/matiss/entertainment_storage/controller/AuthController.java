@@ -1,5 +1,6 @@
 package com.matiss.entertainment_storage.controller;
 
+import com.matiss.entertainment_storage.dto.LoginRequest;
 import com.matiss.entertainment_storage.dto.RegUserResponse;
 import com.matiss.entertainment_storage.dto.RegisterRequest;
 import com.matiss.entertainment_storage.service.AuthService;
@@ -21,5 +22,11 @@ public class AuthController {
     public ResponseEntity<RegUserResponse> register(@RequestBody @Valid RegisterRequest request) {
         RegUserResponse response = authService.register(request);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<RegUserResponse> login(@RequestBody @Valid LoginRequest request) {
+        RegUserResponse response = authService.login(request);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }
