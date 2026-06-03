@@ -15,8 +15,8 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(MediaItemNotFoundException.class)
-    public ResponseEntity<String> MediaItemNotFoundException(MediaItemNotFoundException exception) {
-        return new ResponseEntity<String>(exception.getMessage(), HttpStatus.NOT_FOUND);
+    public ResponseEntity<String> MediaItemNotFoundException(MediaItemNotFoundException notFoundException) {
+        return new ResponseEntity<String>(notFoundException.getMessage(), HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(IllegalArgumentException.class)
