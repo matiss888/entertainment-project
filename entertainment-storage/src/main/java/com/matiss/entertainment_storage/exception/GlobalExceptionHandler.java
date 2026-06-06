@@ -7,23 +7,21 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 @ControllerAdvice
-
 public class GlobalExceptionHandler {
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<String> MediaItemEmptyFieldException(MethodArgumentNotValidException notValidException) {
+    public ResponseEntity<String> mediaItemEmptyFieldException(MethodArgumentNotValidException notValidException) {
         return new ResponseEntity<String>(notValidException.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(MediaItemNotFoundException.class)
-    public ResponseEntity<String> MediaItemNotFoundException(MediaItemNotFoundException notFoundException) {
+    public ResponseEntity<String> mediaItemNotFoundException(MediaItemNotFoundException notFoundException) {
         return new ResponseEntity<String>(notFoundException.getMessage(), HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<String> handleIllegalArgumentException(IllegalArgumentException illegalArgumentException) {
-        return ResponseEntity
-                .status(HttpStatus.CONFLICT)
-                .body(illegalArgumentException.getMessage());
+        return new ResponseEntity<String>(illegalArgumentException.getMessage(), HttpStatus.CONFLICT);
+
     }
 
 }

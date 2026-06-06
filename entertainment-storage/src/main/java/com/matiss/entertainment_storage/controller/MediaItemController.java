@@ -15,9 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import jakarta.validation.Valid;
 
-import com.matiss.entertainment_storage.dto.MediaItemRequest;
 import com.matiss.entertainment_storage.dto.MediaItemRequestDTO;
-import com.matiss.entertainment_storage.dto.MediaItemResponse;
 import com.matiss.entertainment_storage.dto.MediaItemResponseDTO;
 import com.matiss.entertainment_storage.service.MediaItemService;
 
@@ -32,29 +30,29 @@ public class MediaItemController {
     private final MediaItemService mediaItemService;
 
     @GetMapping("/media_items")
-    public ResponseEntity<List<MediaItemResponse>> getAllMediaItems() {
-        return new ResponseEntity<>(mediaItemService.getAllMediaItems(), HttpStatus.OK);
+    public ResponseEntity<List<MediaItemResponseDTO>> getAllMediaItems() {
+        return ResponseEntity.ok(mediaItemService.getAllMediaItems());
     }
 
-    @PostMapping("/media_item")
-    public ResponseEntity<MediaItemResponse> postMediaItem(@RequestBody @Valid MediaItemRequest request) {
-        return new ResponseEntity<>(mediaItemService.postNewMediaItem(request), HttpStatus.CREATED);
+    @PostMapping("/media_items")
+    public ResponseEntity<MediaItemResponseDTO> postMediaItem(@RequestBody @Valid MediaItemRequestDTO request) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(mediaItemService.postNewMediaItem(request));
     }
 
     @DeleteMapping("/media_items/{mediaItemID}")
-    public ResponseEntity<?> removeMediaItem(@PathVariable Long mediaItemID) {
+    public ResponseEntity<Void> removeMediaItem(@PathVariable Long mediaItemID) {
         mediaItemService.removeMediaItem(mediaItemID);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return ResponseEntity.ok().build();
     }
 
     @PutMapping("/media_items/update/{id}")
     public ResponseEntity<MediaItemResponseDTO> updateMediaItem(@PathVariable Long id,
-            @RequestBody @Valid MediaItemRequestDTO mediaItemRequest) {
-        return new ResponseEntity<>(mediaItemService.updateMediaItem(id, request), HttpStatus.OK);
+            @RequestBody @Valid MediaItemRequestDTO request) {
+        return ResponseEntity.ok(mediaItemService.updateMediaItem(id, request));
     }
 
     @GetMapping("/media_items/get/{id}")
     public ResponseEntity<MediaItemResponseDTO> getOneMediaItem(@PathVariable Long id) {
-        return new ResponseEntity<>(mediaItemService.getMediaItemById(id), HttpStatus.OK);
+        return ResponseEntity.ok(mediaItemService.getMediaItemById(id));
     }
 }
